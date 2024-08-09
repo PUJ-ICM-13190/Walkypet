@@ -25,38 +25,6 @@ Walkypet es una aplicación móvil diseñada para mejorar la experiencia de los 
 3. Realiza tus cambios y haz commit
 4. Envía una pull request
 
-### Equipo
-
-Santiago Lemus Vallejo
-
-[![file.jpg](https://i.postimg.cc/yNVw105C/file.jpg)](https://postimg.cc/LJbyvg2x)
-
-|Desarrollador full-stack apasionado por las mascotas, el deporte, y la tecnología.|
-
-Andres Felipe Florez   
-
-[[se quitó una URL no válida]
-
-Desarrollador. 
- 
-Sebastian Gomez Valencia 
-
-[[se quitó una URL no válida]]   
-
-Desarrollador. 
-
-Juan Andres Vasquez 
-
-[[se quitó una URL no válida]]   
-
-Desarrollador. 
-
-Andres Felipe Quiroga    
-
-[[se quitó una URL no válida]]  
-
-Desarrollador. 
- 
 ### Licencia
 Este proyecto esta desarollado bajo la licencia MIT.
 
