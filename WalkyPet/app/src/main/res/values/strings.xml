@@ -1,0 +1,19 @@
+<resources>
+    <string name="app_name">WalkyPet</string>
+    <string name="inicio_registro">Inicio/Registro</string>
+    <string name="usuario">Usuario</string>
+    <string name="contraseña">Contraseña</string>
+    <string name="login">LOGIN</string>
+    <string name="no_tienes_cuenta">No tienes una cuenta?</string>
+    <string name="registrate_aqui">Regístrate aquí</string>
+    <string name="tambien_puedes_iniciar_sesion_con">También puedes iniciar sesión con</string>
+    <string name="facebook">FACEBOOK</string>
+    <string name="google">GOOGLE</string>
+    <string name="registro">Registro</string>
+    <string name="nombre">Nombre</string>
+    <string name="email">Email</string>
+    <string name="register">REGISTRARSE</string>
+    <string name="dog_news">
+        "¡Descubre las últimas noticias sobre el mundo canino! Desde consejos de salud hasta las tendencias en el cuidado de perros, mantente informado sobre todo lo que necesitas saber para el bienestar de tu amigo peludo."
+    </string>
+</resources>

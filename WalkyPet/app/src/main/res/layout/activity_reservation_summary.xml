@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/background_dark"
+    tools:context=".ReservationSummaryActivity">
+
+    <!-- Contenedor principal para organizar el contenido -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:background="@drawable/rounded_background"
+        android:padding="16dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="32dp"
+        android:layout_marginBottom="32dp">
+
+        <!-- Título -->
+        <TextView
+            android:id="@+id/textViewSummaryTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Resumen de la Reserva"
+            android:textSize="24sp"
+            android:textStyle="bold"
+            android:textColor="@color/text_light"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Detalles de la reserva -->
+        <TextView
+            android:id="@+id/textViewReservationDetails"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Detalles de la Reserva:\n\nPaseador: Juan Pérez\nPlan: Premium\nFecha: 25/09/2024\nHora: 10:00 AM"
+            android:textSize="16sp"
+            android:textColor="@color/text_light"
+            android:layout_marginTop="16dp"
+            android:layout_gravity="center_horizontal" />
+
+        <!-- Botón para confirmar la reserva -->
+        <Button
+            android:id="@+id/buttonConfirmReservation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Confirmar Reserva"
+            android:backgroundTint="@color/colorAccent"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:layout_marginTop="24dp"
+            android:layout_gravity="center_horizontal" />
+
+    </LinearLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

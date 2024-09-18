@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/background_dark"
+    tools:context=".PaseadorDetailActivity">
+
+
+    <!-- Imagen del paseador -->
+    <ImageView
+        android:id="@+id/imageViewPaseador"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:src="@drawable/sample_paseador"
+        android:background="@drawable/circle_background"
+        app:layout_constraintBottom_toTopOf="@id/textViewPaseadorName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Nombre del paseador -->
+    <TextView
+        android:id="@+id/textViewPaseadorName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nombre del Paseador"
+        android:textSize="28sp"
+        android:textColor="@color/text_primary"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/imageViewPaseador"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="16dp" />
+
+    <!-- Razas que pasea -->
+    <TextView
+        android:id="@+id/textViewPaseadorRazas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Razas: Pequeñas, Medianas"
+        android:textSize="20sp"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/textViewPaseadorName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Horarios de paseo -->
+    <TextView
+        android:id="@+id/textViewPaseadorHorario"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Horario: 8:00 AM - 5:00 PM"
+        android:textSize="20sp"
+        android:textColor="@color/text_secondary"
+        app:layout_constraintTop_toBottomOf="@id/textViewPaseadorRazas"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_marginTop="8dp" />
+
+    <!-- Información adicional del paseo -->
+    <TextView
+        android:id="@+id/textViewPaseadorInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Rutas: Parques cercanos y zonas verdes.\nPlanes de paseo: Básico, Secundario, Premium."
+        android:textSize="18sp"
+        android:textColor="@color/text_tertiary"
+        android:layout_marginTop="16dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewPaseadorHorario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+    <!-- Botón para agendar -->
+    <Button
+        android:id="@+id/buttonAgendarPaseo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Agendar Paseo"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        android:layout_marginTop="24dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewPaseadorInfo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

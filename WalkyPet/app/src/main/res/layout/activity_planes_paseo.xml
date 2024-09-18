@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".PlanesPaseoActivity">
+
+    <TextView
+        android:id="@+id/textViewTituloPlanes"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="Planes Pawpaths"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewPlanBasico"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/textViewTituloPlanes"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageViewPlanBasico"
+
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_dog_paw"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/textViewPlanBasico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plan básico"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewPrecioPlanBasico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$8000 cop (1 hora)"
+                android:gravity="center"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/buttonSeleccionarPlanBasico"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Plan"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewPlanSecundario"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/cardViewPlanBasico"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageViewPlanSecundario"
+
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_dog_paw"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/textViewPlanSecundario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plan secundario"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewPrecioPlanSecundario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$15000 cop (2 horas)"
+                android:gravity="center"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/buttonSeleccionarPlanSecundario"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Plan"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewPlanPremium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:layout_constraintTop_toBottomOf="@id/cardViewPlanSecundario"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/imageViewPlanPremium"
+
+                android:layout_gravity="center_horizontal"
+                android:src="@drawable/ic_dog_paw"
+                android:scaleType="fitCenter"
+                android:layout_width="50dp"
+                android:layout_height="50dp"/>
+
+            <TextView
+                android:id="@+id/textViewPlanPremium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Plan Premium"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+
+            <TextView
+                android:id="@+id/textViewPrecioPlanPremium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="$200000 cop (Mensualidad sin festivos)"
+                android:gravity="center"
+                android:layout_marginTop="4dp"/>
+
+            <Button
+                android:id="@+id/buttonSeleccionarPlanPremium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Seleccionar Plan"
+                android:layout_marginTop="16dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+</androidx.constraintlayout.widget.ConstraintLayout>
