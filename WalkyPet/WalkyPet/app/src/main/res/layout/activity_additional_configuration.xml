@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="#121212"
+    tools:context=".AdditionalConfigurationActivity">
+
+    <TextView
+        android:id="@+id/textViewAdditionalConfigurationTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Configuración Adicional"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#FFFFFF"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewLanguage"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#1F1F1F"
+        app:layout_constraintTop_toBottomOf="@id/textViewAdditionalConfigurationTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewLanguage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Idioma"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textViewLanguageDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Selecciona el idioma de la aplicación."
+                android:textColor="#B0B0B0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewNotifications"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#1F1F1F"
+        app:layout_constraintTop_toBottomOf="@id/cardViewLanguage"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewNotifications"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Notificaciones"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textViewNotificationsDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Configura tus preferencias de notificaciones."
+                android:textColor="#B0B0B0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardViewPrivacy"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        app:cardCornerRadius="8dp"
+        app:cardElevation="4dp"
+        app:cardBackgroundColor="#1F1F1F"
+        app:layout_constraintTop_toBottomOf="@id/cardViewNotifications"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <TextView
+                android:id="@+id/textViewPrivacy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Privacidad"
+                android:textSize="18sp"
+                android:textStyle="bold"
+                android:textColor="#FFFFFF"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/textViewPrivacyDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Revisa y ajusta las configuraciones de privacidad."
+                android:textColor="#B0B0B0"
+                android:gravity="center"
+                android:layout_marginTop="8dp"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

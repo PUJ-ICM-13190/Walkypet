@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Colores básicos -->
+    <color name="orange">#FFA500</color>
+    <color name="dark_gray">#333333</color>
+    <color name="light_gray">#CCCCCC</color>
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
+    <color name= "yellow">#FFFF00</color>
+    <color name="gray">#808080</color>
+    <color name="card_background">#2C2C2C</color>
+
+    <!-- Colores de fondo y texto -->
+    <color name="background_color">#1F1F1F</color> <!-- Color de fondo oscuro -->
+    <color name="background_light">#F5F5F5</color> <!-- Color de fondo claro -->
+    <color name="background_dark">#1F1F1F</color> <!-- Fondo oscuro para la actividad -->
+    <color name="background_card">#FFFFFF</color> <!-- Color del fondo de la tarjeta -->
+    <color name="text_primary">#FFFFFF</color> <!-- Color de texto principal -->
+    <color name="text_secondary">#B0B0B0</color> <!-- Color de texto secundario -->
+    <color name="text_tertiary">#AAAAAA</color> <!-- Color de texto terciario -->
+
+    <!-- Colores de elementos activos -->
+    <color name="chip_background">#FF5722</color> <!-- Color de fondo de chips -->
+    <color name="chip_stroke">#FFFFFF</color> <!-- Color de borde de chips -->
+
+    <!-- Colores de botones -->
+    <color name="button_color">#FF9800</color> <!-- Color de fondo de botones -->
+    <color name="button_text">#FFFFFF</color> <!-- Color de texto de botones -->
+    <color name="colorPrimary">#FF5722</color> <!-- Color primario (puede ajustarse al naranja deseado) -->
+
+    <!-- Colores de gris -->
+    <color name="gray_light">#D3D3D3</color>
+
+    <color name="background_card_dark">#1E1E1E</color>
+    <color name="text_light">#E0E0E0</color>
+    <color name="colorAccent">#FF5722</color>
+
+    <!-- Colores Modo Oscuro -->
+    <color name="dark_background">#121212</color>
+    <color name="primary_text_dark">#FFFFFF</color>
+    <color name="secondary_text_dark">#B0B0B0</color>
+    <color name="card_background_dark">#1E1E1E</color>
+    <color name="map_background_dark">#2B2B2B</color>
+
+        <!-- Color para RatingBar en modo oscuro -->
+    <style name="RatingBarDark" parent="Widget.AppCompat.RatingBar">
+        <item name="android:progressTint">@color/primary_text_dark</item> <!-- Estrellas llenas -->
+        <item name="android:secondaryProgressTint">@color/primary_text_dark</item> <!-- Parte semi llena -->
+        <item name="android:indeterminateTint">@color/secondary_text_dark</item> <!-- Parte vacía -->
+    </style>
+
+    <color name="background_color_dark">#121212</color>
+
+    <!-- Colores de texto en modo oscuro -->
+    <color name="text_primary_dark">#FFFFFF</color>
+    <color name="text_secondary_dark">#B0B0B0</color>
+
+    <!-- Colores de botones en modo oscuro -->
+    <color name="button_color_dark">#FF9800</color> <!-- Un naranja llamativo para los botones -->
+
+</resources>

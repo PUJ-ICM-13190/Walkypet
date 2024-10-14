@@ -1,0 +1,206 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="24dp"
+    android:background="@color/dark_background"
+    tools:context=".PaseoActivity">
+
+    <!-- Tarjeta del paseo en proceso -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPaseoEnProceso"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:padding="16dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/card_background_dark"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Título del estatus del paseo -->
+            <TextView
+                android:id="@+id/estatusPaseo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estatus del Paseo"
+                android:textColor="@color/primary_text_dark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Estado del paseo -->
+            <TextView
+                android:id="@+id/status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Estatus: En camino hacia ti"
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp" />
+
+            <!-- Avatar del paseador -->
+            <ImageView
+                android:id="@+id/avatar"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginTop="8dp"
+                android:layout_gravity="center"
+                android:src="@drawable/profile_picture"
+                android:scaleType="centerCrop"/>
+
+            <!-- Nombre del paseador -->
+            <TextView
+                android:id="@+id/nombre"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Yeina Suarez"
+                android:textColor="@color/primary_text_dark"
+                android:textSize="16sp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center" />
+
+            <!-- Número de viajes -->
+            <TextView
+                android:id="@+id/viajes"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="150 viajes"
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center" />
+
+            <!-- Puntaje del paseador -->
+            <TextView
+                android:id="@+id/puntaje"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Puntaje: 4.7"
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="14sp"
+                android:layout_marginTop="4dp"
+                android:layout_gravity="center" />
+
+            <!-- Mensaje sobre el encargado -->
+            <TextView
+                android:id="@+id/encargado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="El encargado de tu mascota está en camino"
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Ubicación en tiempo real -->
+            <TextView
+                android:id="@+id/ubicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Ubicación en tiempo real"
+                android:textColor="@color/primary_text_dark"
+                android:textSize="16sp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Mapa de ubicación -->
+            <ImageView
+                android:id="@+id/mapa"
+                android:layout_width="0dp"
+                android:layout_height="150dp"
+                android:layout_marginTop="8dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/map"
+                app:layout_constraintWidth_percent="1.0"/>
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Tarjeta del paseo finalizado -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cardPaseoFinalizado"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:padding="16dp"
+        app:cardElevation="8dp"
+        app:cardCornerRadius="16dp"
+        app:cardBackgroundColor="@color/card_background_dark"
+        app:layout_constraintTop_toBottomOf="@id/cardPaseoEnProceso"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <!-- Título del paseo finalizado -->
+            <TextView
+                android:id="@+id/estatusPaseoFinalizado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Paseo Finalizado"
+                android:textColor="@color/primary_text_dark"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+            <!-- Mensaje sobre el paseo finalizado -->
+            <TextView
+                android:id="@+id/encargadoFinalizado"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="El paseo ha terminado. Por favor, califica el servicio."
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="12sp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Pregunta para calificar el paseo -->
+            <TextView
+                android:id="@+id/rankea"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Rankea el paseo de tu mascota"
+                android:textColor="@color/primary_text_dark"
+                android:textSize="14sp"
+                android:layout_marginTop="8dp" />
+
+            <!-- Pregunta de calificación -->
+            <TextView
+                android:id="@+id/pregunta"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="¿Cómo estuvo el paseo de tu mascota?"
+                android:textColor="@color/secondary_text_dark"
+                android:textSize="12sp"
+                android:layout_marginTop="4dp" />
+
+            <!-- RatingBar para calificación -->
+            <RatingBar
+                android:id="@+id/ratingBar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:numStars="5"
+                android:rating="3"
+                android:theme="@style/RatingBarDark" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Barra de navegación inferior -->
+    <com.google.android.material.bottomnavigation.BottomNavigationView
+        android:id="@+id/bottomNav"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        app:menu="@menu/bottom_nav_menu"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+</androidx.constraintlayout.widget.ConstraintLayout>
