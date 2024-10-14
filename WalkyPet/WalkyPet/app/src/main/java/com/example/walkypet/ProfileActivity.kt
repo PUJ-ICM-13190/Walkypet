@@ -3,15 +3,21 @@ package com.example.walkypet
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.ktx.Firebase
 import com.example.walkypet.databinding.ActivityProfileBinding
 
 class ProfileActivity : AppCompatActivity() {
     private lateinit var binding: ActivityProfileBinding
+    private lateinit var mAuth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityProfileBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        mAuth = Firebase.auth
 
         // Configura los click listeners para los diferentes botones
         binding.cardViewMisPaseos.setOnClickListener {
@@ -46,8 +52,9 @@ class ProfileActivity : AppCompatActivity() {
 
         binding.cardViewLogout.setOnClickListener {
             // Cerrar sesión
-            // Aquí puedes implementar el código para cerrar sesión, como limpiar datos de sesión, etc.
-            // Y luego volver a la pantalla de inicio de sesión o a la actividad principal.
+            mAuth.signOut()
+            val intent = Intent(this, MainActivity::class.java)
+            startActivity(intent)
             finish()  // Finaliza la actividad actual
         }
         // Configurar la barra de navegación
