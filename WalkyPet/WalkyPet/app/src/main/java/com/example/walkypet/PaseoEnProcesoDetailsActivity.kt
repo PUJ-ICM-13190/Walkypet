@@ -1,5 +1,6 @@
 package com.example.walkypet
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.example.walkypet.databinding.ActivityPaseoEnProcesoDetailsBinding
@@ -25,7 +26,8 @@ class PaseoEnProcesoDetailsActivity : AppCompatActivity() {
         }
 
         binding.botonSeguirPaseo.setOnClickListener {
-            // Código para seguir el paseo en tiempo real
+            val intent = Intent(this, MapsUsuarioActivity::class.java) // Cambio a MapsActivity
+            startActivity(intent)
         }
 
         binding.botonRevisarPago.setOnClickListener {

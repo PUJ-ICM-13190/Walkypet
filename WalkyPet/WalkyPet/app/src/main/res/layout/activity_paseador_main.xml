@@ -9,8 +9,6 @@
     tools:context=".PaseadorMainActivity">
 
     <!-- Banner ImageView -->
-
-    <!-- Title TextView -->
     <ImageView
         android:id="@+id/imageViewBanner"
         android:layout_width="0dp"
@@ -24,6 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
+    <!-- Title TextView -->
     <TextView
         android:id="@+id/textViewTitle"
         android:layout_width="wrap_content"
@@ -51,8 +50,6 @@
         android:layout_marginTop="16dp"/>
 
     <!-- Scheduled Walks TextView -->
-
-    <!-- Accepting Requests Switch -->
     <TextView
         android:id="@+id/textViewScheduledWalks"
         android:layout_width="wrap_content"
@@ -65,12 +62,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/textViewEarnings" />
 
-
-
     <!-- View Scheduled Walks Button -->
-
-    <!-- BottomNavigationView -->
-
     <Button
         android:id="@+id/buttonViewScheduledWalks"
         android:layout_width="0dp"
@@ -79,11 +71,27 @@
         android:text="Ver Paseos Programados"
         android:textColor="@android:color/white"
         android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/buttonNewWalk"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        tools:layout_editor_absoluteY="371dp" />
+        app:layout_constraintTop_toBottomOf="@+id/textViewScheduledWalks" />
 
+    <!-- New Button for creating a new walk -->
+    <Button
+        android:id="@+id/buttonNewWalk"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorPrimary"
+        android:text="Crear Nuevo Paseo"
+        android:textColor="@android:color/white"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@+id/bottomNavigationView"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent" />
+
+    <!-- BottomNavigationView -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigationView"
         android:layout_width="match_parent"
