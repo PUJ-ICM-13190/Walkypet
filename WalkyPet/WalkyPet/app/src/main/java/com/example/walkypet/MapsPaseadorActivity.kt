@@ -1,51 +1,39 @@
 package com.example.walkypet
 
 import android.Manifest
-import android.app.UiModeManager
+import android.content.Context
 import android.content.pm.PackageManager
-import android.graphics.Bitmap
-import android.graphics.Color
-import android.graphics.drawable.BitmapDrawable
-import android.location.Geocoder
+import android.hardware.Sensor
+import android.hardware.SensorEvent
+import android.hardware.SensorEventListener
+import android.hardware.SensorManager
+import android.location.Location
+import android.location.LocationListener
+import android.location.LocationManager
 import android.os.Bundle
-import android.os.StrictMode
-import android.os.StrictMode.ThreadPolicy
 import android.util.Log
-import android.widget.Button
-import android.widget.EditText
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.app.ActivityCompat
-import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationServices
 import org.osmdroid.config.Configuration
-import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.MapView
 import org.osmdroid.views.overlay.Marker
-import org.osmdroid.views.overlay.Polyline
-import org.osmdroid.views.overlay.TilesOverlay
-import org.osmdroid.bonuspack.routing.OSRMRoadManager
-import org.osmdroid.bonuspack.routing.Road
-import org.osmdroid.events.MapEventsReceiver
-import org.osmdroid.views.overlay.MapEventsOverlay
-import java.io.IOException
-import java.util.*
+import org.osmdroid.util.GeoPoint
+import kotlin.math.abs
+import kotlin.math.atan2
 
-class MapsPaseadorActivity : AppCompatActivity() {
+class MapsPaseadorActivity : AppCompatActivity(), SensorEventListener, LocationListener {
+
+    private lateinit var sensorManager: SensorManager
+    private var accelerometer: Sensor? = null
+    private var gyroscope: Sensor? = null
+    private lateinit var locationManager: LocationManager
 
     private lateinit var map: MapView
-    private lateinit var roadManager: OSRMRoadManager
-    private var roadOverlay: Polyline? = null // Evitar inicialización tardía con lateinit
-    private lateinit var longPressedMarker: Marker
-    private lateinit var fusedLocationClient: FusedLocationProviderClient // Cliente para obtener la ubicación
-    private val startPoint = GeoPoint(4.627712, -74.063805) // Coordenadas de la Universidad Javeriana
     private val TAG = "MapsPaseadorActivity"
 
-    private lateinit var geocoder: Geocoder
-    private var origenLatLng: GeoPoint? = null
-    private var destinoLatLng: GeoPoint? = null
-    private lateinit var origenMarker: Marker
-    private lateinit var destinoMarker: Marker
+    private val pathPoints = mutableListOf<GeoPoint>() // Para almacenar las posiciones del mapa
+    private var currentLocation: GeoPoint? = null // Almacena la ubicación actual
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,187 +43,189 @@ class MapsPaseadorActivity : AppCompatActivity() {
 
         setContentView(R.layout.activity_maps_paseador)
 
-        // Política de seguridad para permitir llamados síncronos (SOLO PARA PRUEBAS)
-        val policy = ThreadPolicy.Builder().permitAll().build()
-        StrictMode.setThreadPolicy(policy)
-
         // Inicializar el mapa
         map = findViewById(R.id.osmMap)
         map.setMultiTouchControls(true)
 
-        // Inicializar el RoadManager para gestionar rutas
-        roadManager = OSRMRoadManager(this, "ANDROID")
+        // Inicializar el SensorManager
+        sensorManager = getSystemService(Context.SENSOR_SERVICE) as SensorManager
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER)
+        gyroscope = sensorManager.getDefaultSensor(Sensor.TYPE_GYROSCOPE)
 
-        // Inicializar el Geocoder para la búsqueda de ubicaciones
-        geocoder = Geocoder(this, Locale.getDefault())
+        // Inicializar el LocationManager
+        locationManager = getSystemService(Context.LOCATION_SERVICE) as LocationManager
 
-        // Inicializar FusedLocationProviderClient para obtener la ubicación actual
-        fusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
-
-        // Configurar los botones de búsqueda
-        val btnSearchOrigen = findViewById<Button>(R.id.btnSearchOrigen)
-        val etSearchLocationOrigen = findViewById<EditText>(R.id.etSearchLocationOrigen)
-        val btnSearchDestino = findViewById<Button>(R.id.btnSearchDestino)
-        val etSearchLocationDestino = findViewById<EditText>(R.id.etSearchLocationDestino)
-        val btnUseCurrentLocation = findViewById<Button>(R.id.btnUseCurrentLocation)
-
-        // Listener para el botón de búsqueda de origen
-        btnSearchOrigen.setOnClickListener {
-            val origen = etSearchLocationOrigen.text.toString()
-            if (origen.isNotEmpty()) {
-                searchLocation(origen, true)
-            } else {
-                Toast.makeText(this, "Ingrese una dirección de origen", Toast.LENGTH_SHORT).show()
-            }
+        // Registrar los listeners de los sensores
+        accelerometer?.also { accel ->
+            sensorManager.registerListener(this, accel, SensorManager.SENSOR_DELAY_NORMAL)
         }
 
-        // Listener para el botón de búsqueda de destino
-        btnSearchDestino.setOnClickListener {
-            val destino = etSearchLocationDestino.text.toString()
-            if (destino.isNotEmpty()) {
-                searchLocation(destino, false)
-            } else {
-                Toast.makeText(this, "Ingrese una dirección de destino", Toast.LENGTH_SHORT).show()
-            }
+        gyroscope?.also { gyro ->
+            sensorManager.registerListener(this, gyro, SensorManager.SENSOR_DELAY_NORMAL)
         }
 
-        // Listener para el botón que usa la ubicación actual como origen
-        btnUseCurrentLocation.setOnClickListener {
-            useCurrentLocationAsOrigin()
+        // Comprobar y solicitar permisos de ubicación
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
+        } else {
+            startLocationUpdates() // Iniciar las actualizaciones de ubicación
         }
     }
 
-    // Obtener la ubicación actual y establecerla como el origen
-    private fun useCurrentLocationAsOrigin() {
-        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
-        ) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.ACCESS_FINE_LOCATION), 1)
-            return
-        }
-
-        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
-            if (location != null) {
-                val currentLocation = GeoPoint(location.latitude, location.longitude)
-                origenLatLng = currentLocation
-
-                // Colocar el marcador de origen en la ubicación actual
-                if (::origenMarker.isInitialized) {
-                    map.overlays.remove(origenMarker)
-                }
-                origenMarker = createMarker(currentLocation, "Origen (Mi ubicación)", null, R.drawable.location_red)
-                map.overlays.add(origenMarker)
-
-                map.controller.animateTo(currentLocation)
-                map.controller.setZoom(15.0)
-
-                // Si también se ha establecido el destino, dibujar la ruta
-                if (origenLatLng != null && destinoLatLng != null) {
-                    drawRoute(origenLatLng!!, destinoLatLng!!)
-                }
-            } else {
-                Toast.makeText(this, "No se pudo obtener la ubicación actual", Toast.LENGTH_SHORT).show()
+    // Implementación de SensorEventListener
+    override fun onSensorChanged(event: SensorEvent?) {
+        event?.let {
+            when (it.sensor.type) {
+                Sensor.TYPE_ACCELEROMETER -> handleAccelerometerData(it)
+                Sensor.TYPE_GYROSCOPE -> handleGyroscopeData(it)
+                else -> {}
             }
         }
+    }
+
+    override fun onAccuracyChanged(sensor: Sensor?, accuracy: Int) {
+        when (sensor?.type) {
+            Sensor.TYPE_ACCELEROMETER -> {
+                when (accuracy) {
+                    SensorManager.SENSOR_STATUS_NO_CONTACT -> {
+                        Log.w(TAG, "Acelerómetro: Sin contacto.")
+                    }
+                    SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+                        Log.w(TAG, "Acelerómetro: Precisión poco confiable.")
+                    }
+                    else -> {
+                        Log.i(TAG, "Acelerómetro: Precisión confiable.")
+                    }
+                }
+            }
+            Sensor.TYPE_GYROSCOPE -> {
+                when (accuracy) {
+                    SensorManager.SENSOR_STATUS_NO_CONTACT -> {
+                        Log.w(TAG, "Giroscopio: Sin contacto.")
+                    }
+                    SensorManager.SENSOR_STATUS_UNRELIABLE -> {
+                        Log.w(TAG, "Giroscopio: Precisión poco confiable.")
+                    }
+                    else -> {
+                        Log.i(TAG, "Giroscopio: Precisión confiable.")
+                    }
+                }
+            }
+            else -> {
+                Log.d(TAG, "Sensor desconocido.")
+            }
+        }
+    }
+
+    private fun handleAccelerometerData(event: SensorEvent) {
+        val x = event.values[0]
+        val y = event.values[1]
+        val z = event.values[2]
+
+        Log.d(TAG, "Acelerómetro - X: $x, Y: $y, Z: $z")
+
+        // Determina si hay movimiento significativo
+        if (abs(x) > 2 || abs(y) > 2) {
+            if (currentLocation != null) {
+                pathPoints.add(currentLocation!!) // Guardar la posición
+                drawPathOnMap(currentLocation!!) // Dibuja la trayectoria en el mapa
+            }
+        }
+    }
+
+    private fun handleGyroscopeData(event: SensorEvent) {
+        val xRotation = event.values[0]
+        val yRotation = event.values[1]
+        val zRotation = event.values[2]
+
+        Log.d(TAG, "Giroscopio - X: $xRotation, Y: $yRotation, Z: $zRotation")
+
+        // Ajusta la orientación del mapa en función de los valores de rotación
+        adjustMapOrientation(xRotation.toDouble(), yRotation.toDouble(), zRotation.toDouble())
+    }
+
+    private fun startLocationUpdates() {
+        // Solicitar actualizaciones de ubicación
+        if (ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(
+                this,
+                Manifest.permission.ACCESS_COARSE_LOCATION
+            ) != PackageManager.PERMISSION_GRANTED
+        ) {
+            // TODO: Consider calling
+            //    ActivityCompat#requestPermissions
+            // here to request the missing permissions, and then overriding
+            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
+            //                                          int[] grantResults)
+            // to handle the case where the user grants the permission. See the documentation
+            // for ActivityCompat#requestPermissions for more details.
+            return
+        }
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000L, 10f, this)
+    }
+
+    override fun onLocationChanged(location: Location) {
+        // Actualizar la ubicación actual
+        currentLocation = GeoPoint(location.latitude, location.longitude)
+        Log.d(TAG, "Ubicación actual - Latitud: ${location.latitude}, Longitud: ${location.longitude}")
+    }
+
+    private fun drawPathOnMap(location: GeoPoint) {
+        val marker = Marker(map)
+        marker.position = location
+        marker.title = "Trayectoria"
+        map.overlays.add(marker)
+        map.controller.animateTo(location) // Centra el mapa en la nueva ubicación
+    }
+
+    private fun adjustMapOrientation(xRotation: Double, yRotation: Double, zRotation: Double) {
+
+            // Calculamos la dirección del norte
+            val northDirection = Math.toDegrees(
+                atan2(yRotation,
+                xRotation)
+            ).toFloat()
+
+            // Usamos el método rotate de OSMdroid para ajustar la vista del mapa
+        map.mapOrientation = northDirection
+
+            // Opcional: También puedes usar el valor de zRotation para un efecto adicional
+            // Esto podría usarse para ajustar el zoom o el campo de visión
+            // Ejemplo: map.zoom = Math.min(Math.max(1.0f + zRotation / 10.0f, 1.0f), 20.0f)
+
+            Log.d(TAG, "Orientación del mapa ajustada: $northDirection")
+        }
+
+
+    override fun onPause() {
+        super.onPause()
+        sensorManager.unregisterListener(this)
+        locationManager.removeUpdates(this) // Detener las actualizaciones de ubicación
     }
 
     override fun onResume() {
         super.onResume()
-        map.onResume()
-        val mapController = map.controller
-        mapController.setZoom(18.0)
-        mapController.setCenter(this.startPoint)
-        val uiManager = getSystemService(UI_MODE_SERVICE) as UiModeManager
-        if (uiManager.nightMode == UiModeManager.MODE_NIGHT_YES) {
-            map.overlayManager.tilesOverlay.setColorFilter(TilesOverlay.INVERT_COLORS)
+        accelerometer?.also { sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL) }
+        gyroscope?.also { sensorManager.registerListener(this, it, SensorManager.SENSOR_DELAY_NORMAL) }
+
+        // Reiniciar las actualizaciones de ubicación
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED ||
+            ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            startLocationUpdates()
         }
     }
 
-    override fun onPause() {
-        super.onPause()
-        map.onPause()
-    }
-
-    // Método para buscar una ubicación usando Geocoder y marcarla en el mapa
-    private fun searchLocation(query: String, isOrigen: Boolean) {
-        try {
-            val addresses = geocoder.getFromLocationName(query, 1)
-            if (!addresses.isNullOrEmpty()) {
-                val address = addresses[0]
-                val locationLatLng = GeoPoint(address.latitude, address.longitude)
-
-                if (isOrigen) {
-                    origenLatLng = locationLatLng
-                    if (::origenMarker.isInitialized) {
-                        map.overlays.remove(origenMarker)
-                    }
-                    origenMarker = createMarker(locationLatLng, "Origen", null, R.drawable.location_red)
-                    map.overlays.add(origenMarker)
-                } else {
-                    destinoLatLng = locationLatLng
-                    if (::destinoMarker.isInitialized) {
-                        map.overlays.remove(destinoMarker)
-                    }
-                    destinoMarker = createMarker(locationLatLng, "Destino", null, R.drawable.location_blue)
-                    map.overlays.add(destinoMarker)
-                }
-
-                map.controller.animateTo(locationLatLng)
-                map.controller.setZoom(15.0)
-
-                if (origenLatLng != null && destinoLatLng != null) {
-                    drawRoute(origenLatLng!!, destinoLatLng!!)
-                }
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+        if (requestCode == 1) {
+            if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
+                startLocationUpdates() // Iniciar actualizaciones si se concede el permiso
             } else {
-                Toast.makeText(this, "Dirección no encontrada", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Permiso de ubicación denegado", Toast.LENGTH_SHORT).show()
             }
-        } catch (e: IOException) {
-            e.printStackTrace()
-            Toast.makeText(this, "Error al buscar la dirección", Toast.LENGTH_SHORT).show()
         }
-    }
-
-
-    // Crear un nuevo marcador
-    private fun createMarker(p: GeoPoint, title: String?, desc: String?, iconID: Int): Marker {
-        val marker = Marker(map)
-        marker.position = p
-        marker.title = title
-        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
-
-        if (iconID != 0) {
-            val myIcon = resources.getDrawable(iconID, this.theme) as BitmapDrawable
-            val scaledIcon = Bitmap.createScaledBitmap(myIcon.bitmap, 80, 80, false)
-            marker.icon = BitmapDrawable(resources, scaledIcon)
-        }
-
-        if (desc != null) {
-            marker.subDescription = desc
-        }
-
-        return marker
-    }
-
-    // Método para dibujar una ruta entre dos puntos
-    private fun drawRoute(start: GeoPoint, finish: GeoPoint) {
-        val routePoints = ArrayList<GeoPoint>()
-        routePoints.add(start)
-        routePoints.add(finish)
-
-        val road: Road = roadManager.getRoad(routePoints)
-
-        if (road.mStatus != Road.STATUS_OK) {
-            Toast.makeText(this, "Error al calcular la ruta", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        roadOverlay?.let { map.overlays.remove(it) }
-
-        roadOverlay = OSRMRoadManager.buildRoadOverlay(road).apply {
-            outlinePaint.color = Color.RED
-            outlinePaint.strokeWidth = 10f
-        }
-
-        roadOverlay?.let { map.overlays.add(it) }
     }
 }
