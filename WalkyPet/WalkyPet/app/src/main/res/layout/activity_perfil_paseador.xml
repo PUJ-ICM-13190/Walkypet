@@ -23,6 +23,33 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="24dp"/>
 
+    <ImageView
+        android:id="@+id/foto_perfil"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginBottom="16dp"
+        android:scaleType="centerCrop"
+        android:layout_gravity="center"
+        android:src="@drawable/foto_perfil"
+        android:clipToOutline="true"
+        android:background="@drawable/circle_shape"
+        app:layout_constraintTop_toBottomOf="@id/textViewName"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        />
+
+    <ImageView
+        android:id="@+id/editar_foto"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:src="@drawable/editar"
+        android:layout_alignBottom="@id/foto_perfil"
+        android:layout_alignEnd="@id/foto_perfil"
+        android:layout_marginBottom="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/foto_perfil"
+        app:layout_constraintEnd_toEndOf="@id/foto_perfil"/>
+
     <!-- Update Info Button -->
     <Button
         android:id="@+id/buttonUpdateInfo"
@@ -33,7 +60,7 @@
         android:backgroundTint="@color/card_background"
         android:text="Actualizar Información"
         android:textColor="@color/primary_text_dark"
-        app:layout_constraintTop_toBottomOf="@id/textViewName"
+        app:layout_constraintTop_toBottomOf="@id/foto_perfil"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 

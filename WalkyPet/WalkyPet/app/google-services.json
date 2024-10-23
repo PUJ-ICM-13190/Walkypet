@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "420060950342",
+    "project_id": "proyecto-walkypet",
+    "storage_bucket": "proyecto-walkypet.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:420060950342:android:447761118e763b0ea4bf47",
+        "android_client_info": {
+          "package_name": "com.example.walkypet"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "420060950342-816tumcu89t35si32ecglr5tgpmp04cd.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDUXKJcNlZGjq5bSfk0kY6l9v0NfhyWO0s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "420060950342-816tumcu89t35si32ecglr5tgpmp04cd.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

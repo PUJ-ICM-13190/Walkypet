@@ -17,6 +17,13 @@ class PaseadorMainActivity : AppCompatActivity() {
         binding.textViewEarnings.text = "Ganancias: $150.00"
         binding.textViewScheduledWalks.text = "Paseos Programados: 3"
 
+        // Configurar el botón "Crear Nuevo Paseo"
+        binding.buttonNewWalk.setOnClickListener {
+            // Iniciar la actividad MapsPaseadorActivity cuando se haga clic en el botón
+            val intent = Intent(this, MapsPaseadorActivity::class.java)
+            startActivity(intent)
+        }
+
         // Configurar la barra de navegación
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {

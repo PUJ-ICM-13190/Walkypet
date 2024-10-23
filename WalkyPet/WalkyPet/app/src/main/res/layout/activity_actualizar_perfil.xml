@@ -8,6 +8,8 @@
     android:background="#121212"
     tools:context=".ActualizarPerfilActivity">
 
+
+
     <TextView
         android:id="@+id/textViewActualizarPerfilTitle"
         android:layout_width="wrap_content"
@@ -36,6 +38,19 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/foto_perfil"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:scaleType="centerCrop"
+                android:layout_gravity="center"
+                android:src="@drawable/foto_perfil"
+                app:layout_constraintTop_toBottomOf="@id/textViewActualizarPerfilTitle"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"/>
 
             <EditText
                 android:id="@+id/editTextName"
